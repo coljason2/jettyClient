@@ -1,0 +1,17 @@
+.classpath
+.project
+.settings/org.eclipse.m2e.core.prefs
+.settings/org.eclipse.jdt.core.prefs
+.settings/org.eclipse.core.resources.prefs
+target/classes/com/model/gameMarket.class
+target/classes/com/model/acct.class
+target/classes/com/model/StartGameRequest.class
+target/classes/com/model/LoginResponse.class
+target/classes/com/model/LoginRequest.class
+target/classes/com/jettyClient/SimpleEchoSocket.class
+target/classes/com/jettyClient/SimpleEchoSocket$1.class
+target/classes/com/jettyClient/App.class
+target/classes/com/api/CommandsLotto.class
+target/classes/META-INF/maven/com/jettyClient/pom.xml
+target/classes/META-INF/maven/com/jettyClient/pom.properties
+target/classes/META-INF/MANIFEST.MF
