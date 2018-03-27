@@ -5,7 +5,11 @@ import java.util.Random;
 import com.GenIlottoGame.AbstractGeniLottoGame;
 import com.placebet.item;
 import com.placebet.placeBetEntity;
-
+/*
+ * 
+ * 六合彩-尾數
+ * 
+ * */
 public class GetMark6_TAIL extends AbstractGeniLottoGame {
 
 	// placebet.setBetCount(1);

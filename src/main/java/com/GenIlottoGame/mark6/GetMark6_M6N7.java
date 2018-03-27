@@ -1,13 +1,13 @@
 package com.GenIlottoGame.mark6;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Random;
-
 import com.GenIlottoGame.AbstractGeniLottoGame;
 import com.placebet.item;
 import com.placebet.placeBetEntity;
-
+/*
+ * 
+ * 六合彩-特碼
+ * 
+ * */
 public class GetMark6_M6N7 extends AbstractGeniLottoGame {
 
 	public GetMark6_M6N7(String serialNo, String sessionId, String token, int drawId) {

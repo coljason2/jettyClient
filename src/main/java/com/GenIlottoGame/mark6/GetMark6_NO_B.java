@@ -7,7 +7,13 @@ import com.google.common.collect.ImmutableMap;
 import com.placebet.item;
 import com.placebet.placeBetEntity;
 
+/*
+ * 
+ * 六合彩-不中
+ * 
+ * */
 public class GetMark6_NO_B extends AbstractGeniLottoGame {
+
 	private Map<Integer, String> BetTypes = new ImmutableMap.Builder<Integer, String>().put(5, "NO5B").put(6, "NO6B")
 			.put(7, "NO7B").put(8, "NO8B").put(9, "NO9B").put(10, "NO10B").build();
 

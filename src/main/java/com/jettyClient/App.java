@@ -2,12 +2,12 @@ package com.jettyClient;
 
 import java.net.URI;
 import java.util.concurrent.TimeUnit;
-
 import org.eclipse.jetty.websocket.client.ClientUpgradeRequest;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
 
 /**
- * Hello world!
+ * 2018-03-26
+ * ilotto websocket client
  *
  */
 public class App {

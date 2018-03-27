@@ -7,7 +7,11 @@ import com.GenIlottoGame.AbstractGeniLottoGame;
 import com.google.common.collect.ImmutableMap;
 import com.placebet.item;
 import com.placebet.placeBetEntity;
-
+/*
+ * 
+ * 六合彩-正特
+ * 
+ * */
 public class GetMark6_M6N1_6 extends AbstractGeniLottoGame {
 
 	private Map<Integer, String> BetTypes = new ImmutableMap.Builder<Integer, String>().put(0, "M6N1").put(1, "M6N2")
