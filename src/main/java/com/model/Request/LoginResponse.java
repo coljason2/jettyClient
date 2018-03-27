@@ -1,4 +1,6 @@
-package com.model;
+package com.model.Request;
+
+import com.model.acct;
 
 import lombok.Data;
 

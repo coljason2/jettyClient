@@ -26,3 +26,11 @@ target/classes/com/GenIlottoGame/mark6/GetMark6_NO_B.class
 target/classes/com/GenIlottoGame/mark6/GetMark6_M6N7.class
 target/classes/com/GenIlottoGame/mark6/GetMark6_M6N1_6.class
 target/classes/com/GenIlottoGame/AbstractGeniLottoGame.class
+target/classes/com/model/Request/StartGameRequest.class
+target/classes/com/model/Request/RspDrawMarket.class
+target/classes/com/model/Request/LoginResponse.class
+target/classes/com/model/Request/LoginRequest.class
+target/classes/com/GenIlottoGame/mark6/GetMark6_ZN7.class
+target/classes/com/GenIlottoGame/mark6/GetMark6_ZG6.class
+target/classes/com/GenIlottoGame/mark6/GetMark6_M6T.class
+target/classes/com/GenIlottoGame/mark6/GetMark6_HALF.class

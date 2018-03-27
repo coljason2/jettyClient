@@ -1,6 +1,8 @@
-package com.model;
+package com.model.Request;
 
 import java.util.List;
+
+import com.model.nextDraw;
 
 import lombok.Data;
 
