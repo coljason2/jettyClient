@@ -15,3 +15,14 @@ target/classes/com/api/CommandsLotto.class
 target/classes/META-INF/maven/com/jettyClient/pom.xml
 target/classes/META-INF/maven/com/jettyClient/pom.properties
 target/classes/META-INF/MANIFEST.MF
+target/classes/com/placebet/placeBetEntity.class
+target/classes/com/placebet/item.class
+target/classes/com/model/nextDraw.class
+target/classes/com/model/RspDrawMarket.class
+target/classes/com/model/QueryDrawInfo.class
+target/classes/com/api/Commands.class
+target/classes/com/GenIlottoGame/mark6/GetMark6_TAIL.class
+target/classes/com/GenIlottoGame/mark6/GetMark6_NO_B.class
+target/classes/com/GenIlottoGame/mark6/GetMark6_M6N7.class
+target/classes/com/GenIlottoGame/mark6/GetMark6_M6N1_6.class
+target/classes/com/GenIlottoGame/AbstractGeniLottoGame.class

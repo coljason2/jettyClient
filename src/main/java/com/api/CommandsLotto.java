@@ -1,31 +1,14 @@
-/**
- * Commands.java
- *
- * Copyright (c) by you
- *
- */
+
 package com.api;
 
-/**
- * 
- *
- * @date 2012-6-20
- * @author you
- *
- * @版本更新列表
- * 
- *         <pre>
- * 修改版本: 1.0.0
- * 修改日期：2012-6-20
- * 修改人 : you
- * 修改说明：形成初始版本
- *         </pre>
- */
 public interface CommandsLotto {
 
 	public static final String success = "0";
 	//////////////////// html5 api 100 ~ 120 ///////////////////////////////
 	public static final int Login = 101;
+
+	/** query draw info */
+	public static final int QueryDrawInfo = 20;
 
 	/** query open draw list */
 	public static final int QueryOpenDrawList = 102;
