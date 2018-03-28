@@ -23,7 +23,9 @@ import com.GenIlottoGame.mark6.GetMark6_M6N7;
 import com.GenIlottoGame.mark6.GetMark6_M6T;
 import com.GenIlottoGame.mark6.GetMark6_NO_B;
 import com.GenIlottoGame.mark6.GetMark6_TAIL;
+import com.GenIlottoGame.mark6.GetMark6_ZALL;
 import com.GenIlottoGame.mark6.GetMark6_ZG6;
+import com.GenIlottoGame.mark6.GetMark6_ZN7;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.api.Commands;
@@ -80,7 +82,7 @@ public class SimpleEchoSocket {
 
 	@OnWebSocketMessage
 	public void onMessage(String msg) throws IOException, InterruptedException {
-		// Thread.sleep(1000);
+		Thread.sleep(1000);
 		parseResponseMessage(msg);
 		log.info("Got msg: {} ", msg);
 		// code = response.get("code").toString();
@@ -104,20 +106,24 @@ public class SimpleEchoSocket {
 	}
 
 	private void PlaceBet() {
-		GetMark6_ZG6 GetMark6_ZG6 = new GetMark6_ZG6(loginResponse.getSerialNo(), loginResponse.getSessionId(),
+		GetMark6_ZALL Bet = new GetMark6_ZALL(loginResponse.getSerialNo(), loginResponse.getSessionId(),
 				loginResponse.getToken(), RspDrawMarket.get(0).getDrawId());
-//		GetMark6_M6N7 GetMark6_M6N7 = new GetMark6_M6N7(loginResponse.getSerialNo(), loginResponse.getSessionId(),
-//				loginResponse.getToken(), RspDrawMarket.get(0).getDrawId());
-//		GetMark6_NO_B GetMark6_NO_B = new GetMark6_NO_B(loginResponse.getSerialNo(), loginResponse.getSessionId(),
+		// GetMark6_M6N7 GetMark6_M6N7 = new
+		// GetMark6_M6N7(loginResponse.getSerialNo(),
+		// loginResponse.getSessionId(),
 		// loginResponse.getToken(), RspDrawMarket.get(0).getDrawId());
-		sendMessage(CommandsLotto.PlaceBet, GetMark6_ZG6.get_placeBet());
+		// GetMark6_NO_B GetMark6_NO_B = new
+		// GetMark6_NO_B(loginResponse.getSerialNo(),
+		// loginResponse.getSessionId(),
+		// loginResponse.getToken(), RspDrawMarket.get(0).getDrawId());
+		sendMessage(CommandsLotto.PlaceBet, Bet.get_placeBet());
 	}
 
 	private void StartPlaceBet() {
 		RspDrawMarket = JSON.parseObject(response.getJsonArray("list").toString(),
 				new TypeReference<List<RspDrawMarket>>() {
 				});
-		GetMark6_ZG6 GetMark6_ZG6 = new GetMark6_ZG6(loginResponse.getSerialNo(), loginResponse.getSessionId(),
+		GetMark6_ZALL Bet = new GetMark6_ZALL(loginResponse.getSerialNo(), loginResponse.getSessionId(),
 				loginResponse.getToken(), RspDrawMarket.get(0).getDrawId());
 
 		// GetMark6_TAIL GetMark6_TAIL = new
@@ -129,7 +135,7 @@ public class SimpleEchoSocket {
 		// GetMark6_NO_B(loginResponse.getSerialNo(),
 		// loginResponse.getSessionId(),
 		// loginResponse.getToken(), RspDrawMarket.get(0).getDrawId());
-		sendMessage(CommandsLotto.PlaceBet, GetMark6_ZG6.get_placeBet());
+		sendMessage(CommandsLotto.PlaceBet, Bet.get_placeBet());
 
 	}
 

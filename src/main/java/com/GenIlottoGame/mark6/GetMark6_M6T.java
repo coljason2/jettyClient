@@ -46,7 +46,6 @@ public class GetMark6_M6T extends AbstractGeniLottoGame {
 		item.setDrawType("M6T");
 		int betcount = new Random().nextInt(7) + 1;
 		int betamt = 0;
-
 		while (item.getBetItem().size() < betcount) {
 			String betItem = BetTypes.get(new Random().nextInt(7) + 1);
 			if (!item.getBetItem().contains(betItem)) {

@@ -1,5 +1,8 @@
 package com.GenIlottoGame;
 
+import java.util.HashSet;
+
+import com.api.ChineseCalendar;
 import com.placebet.item;
 import com.placebet.placeBetEntity;
 
@@ -11,7 +14,9 @@ import com.placebet.placeBetEntity;
  * */
 public abstract class AbstractGeniLottoGame {
 	public placeBetEntity placebet = new placeBetEntity();
+	public HashSet<Integer> RndNum = new HashSet<Integer>();
 	public item item;
+	public static final String ThisYearIndex = ChineseCalendar.getAnimalIndex() + 1 + "";
 
 	abstract public placeBetEntity get_placeBet();
 }

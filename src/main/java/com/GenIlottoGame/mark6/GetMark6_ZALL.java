@@ -9,16 +9,16 @@ import com.placebet.placeBetEntity;
 /*
  * 
  * 
- * 六合彩-生肖(特肖)
+ * 六合彩-生肖(一肖)
  * 
  * 
  * odds
- * 當年  9.604
- * 一般 12.005
+ * 當年  1.769284
+ * 一般 2.077507
  * */
-public class GetMark6_ZN7 extends AbstractGeniLottoGame {
+public class GetMark6_ZALL extends AbstractGeniLottoGame {
 
-	public GetMark6_ZN7(String serialNo, String sessionId, String token, int drawId) {
+	public GetMark6_ZALL(String serialNo, String sessionId, String token, int drawId) {
 		super();
 		placebet.setSerialNo(serialNo);
 		placebet.setSessionId(sessionId);
@@ -30,13 +30,13 @@ public class GetMark6_ZN7 extends AbstractGeniLottoGame {
 		placebet.setBetUnit(1);
 		placebet.setComm(0.02);
 		placebet.setPrizeGroup("1950");
-		placebet.setBetType("ZN7");
+		placebet.setBetType("ZALL");
 	}
 
 	@Override
 	public placeBetEntity get_placeBet() {
 		item = new item();
-		item.setDrawType("ZN7");
+		item.setDrawType("ZALL");
 		int betCount = new Random().nextInt(11) + 1;
 		int betamt = 0;
 		while (RndNum.size() < betCount) {
@@ -53,16 +53,16 @@ public class GetMark6_ZN7 extends AbstractGeniLottoGame {
 		placebet.setBetCount(betCount);
 		placebet.setBetAmount(betamt);
 		if (placebet.getItems().get(0).equals(ThisYearIndex)) {
-			placebet.setOdds("9.604");
+			placebet.setOdds("1.769284");
 		} else {
-			placebet.setOdds("12.005");
+			placebet.setOdds("2.077507");
 		}
 
 		return placebet;
 	}
 
-	// public static void main(String[] args) {
-	// GetMark6_ZN7 test = new GetMark6_ZN7("aaaaa", "aaaaa", "aaaaa", 45555);
-	// System.out.println(test.get_placeBet());
-	// }
+	public static void main(String[] args) {
+		GetMark6_ZALL test = new GetMark6_ZALL("aaaaa", "aaaaa", "aaaaa", 45555);
+		System.out.println(test.get_placeBet());
+	}
 }

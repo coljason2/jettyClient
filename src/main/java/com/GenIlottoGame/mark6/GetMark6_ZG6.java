@@ -1,13 +1,9 @@
 package com.GenIlottoGame.mark6;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Random;
-
 import com.GenIlottoGame.AbstractGeniLottoGame;
-import com.google.common.collect.ImmutableMap;
 import com.placebet.item;
 import com.placebet.placeBetEntity;
 
@@ -41,7 +37,6 @@ public class GetMark6_ZG6 extends AbstractGeniLottoGame {
 		placebet.setComm(0.02);
 		placebet.setPrizeGroup("1950");
 		placebet.setBetType("ZG6");
-		placebet.setOdds("2.000833");
 	}
 
 	public int countBetcount(int i) {
@@ -64,26 +59,35 @@ public class GetMark6_ZG6 extends AbstractGeniLottoGame {
 
 	@Override
 	public placeBetEntity get_placeBet() {
+
 		item = new item();
 		item.setDrawType("ZG6");
 		int size = new Random().nextInt(5) + 6;
 		int betuint = new Random().nextInt(100) + 1;
-		while (item.getBetItem().size() < size) {
+		while (RndNum.size() < size) {
 			int Random = new Random().nextInt(11) + 1;
-			if (!item.getBetItem().contains(Random + "")) {
-				item.getBetItem().add(Random + "");
-			}
+			RndNum.add(Random);
+		}
+		for (int i : RndNum) {
+			item.getBetItem().add(i + "");
 		}
 		placebet.setBetUnit(betuint);
 		placebet.setBetAmount(betuint * countBetcount(size));
 		placebet.setBetCount(countBetcount(size));
 		placebet.getItems().add(item);
+
+		if (placebet.getItems().get(0).equals(ThisYearIndex)) {
+			placebet.setOdds("1.9208");
+		} else {
+			placebet.setOdds("2.000833");
+		}
+
 		return placebet;
 	}
 
-	// public static void main(String[] args) {
-	// GetMark6_ZG6 test = new GetMark6_ZG6("ddddd", "dddddd", "dddddd", 45642);
-	// System.out.println(test.get_placeBet());
-	//
-	// }
+	public static void main(String[] args) {
+		GetMark6_ZG6 test = new GetMark6_ZG6("ddddd", "dddddd", "dddddd", 45642);
+		System.out.println(test.get_placeBet());
+
+	}
 }

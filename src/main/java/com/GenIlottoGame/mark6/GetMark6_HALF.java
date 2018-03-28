@@ -2,12 +2,16 @@ package com.GenIlottoGame.mark6;
 
 import java.util.Map;
 import java.util.Random;
-
 import com.GenIlottoGame.AbstractGeniLottoGame;
 import com.google.common.collect.ImmutableMap;
 import com.placebet.item;
 import com.placebet.placeBetEntity;
 
+/*
+ * 
+ * 六合彩-半波
+ * 
+ * */
 public class GetMark6_HALF extends AbstractGeniLottoGame {
 
 	private Map<Integer, String> BetTypes = new ImmutableMap.Builder<Integer, String>().put(0, "RB").put(1, "RS")
@@ -51,7 +55,6 @@ public class GetMark6_HALF extends AbstractGeniLottoGame {
 				betamt = betamt + betAmount;
 			}
 		}
-
 		placebet.setOdds(Odds.get(item.getBetItem().get(0)) + "");
 		placebet.setBetAmount(betamt);
 		placebet.setBetCount(betcount);
@@ -59,9 +62,10 @@ public class GetMark6_HALF extends AbstractGeniLottoGame {
 		return placebet;
 	}
 
-//	public static void main(String[] args) {
-//		GetMark6_HALF GetMark6_HALF = new GetMark6_HALF("ggggggg", "ggggggggg", "ggggggg", 5566);
-//		System.out.println(GetMark6_HALF.get_placeBet());
-//
-//	}
+	// public static void main(String[] args) {
+	// GetMark6_HALF GetMark6_HALF = new GetMark6_HALF("ggggggg", "ggggggggg",
+	// "ggggggg", 5566);
+	// System.out.println(GetMark6_HALF.get_placeBet());
+	//
+	// }
 }
