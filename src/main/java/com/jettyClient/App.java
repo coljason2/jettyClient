@@ -6,8 +6,7 @@ import org.eclipse.jetty.websocket.client.ClientUpgradeRequest;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
 
 /**
- * 2018-03-26
- * ilotto websocket client
+ * 2018-03-26 ilotto websocket client
  *
  */
 public class App {

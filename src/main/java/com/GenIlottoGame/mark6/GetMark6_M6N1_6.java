@@ -5,8 +5,10 @@ import java.util.Random;
 
 import com.GenIlottoGame.AbstractGeniLottoGame;
 import com.google.common.collect.ImmutableMap;
+import com.model.Request.LoginResponse;
 import com.placebet.item;
 import com.placebet.placeBetEntity;
+
 /*
  * 
  * 六合彩-正特
@@ -17,13 +19,11 @@ public class GetMark6_M6N1_6 extends AbstractGeniLottoGame {
 	private Map<Integer, String> BetTypes = new ImmutableMap.Builder<Integer, String>().put(0, "M6N1").put(1, "M6N2")
 			.put(2, "M6N3").put(3, "M6N4").put(4, "M6N5").put(5, "M6N6").build();
 
-
-	
-	public GetMark6_M6N1_6(String serialNo, String sessionId, String token, int drawId) {
+	public GetMark6_M6N1_6(LoginResponse loginRsp, int drawId) {
 		super();
-		placebet.setSerialNo(serialNo);
-		placebet.setSessionId(sessionId);
-		placebet.setToken(token);
+		placebet.setSerialNo(loginRsp.getSerialNo());
+		placebet.setSessionId(loginRsp.getSessionId());
+		placebet.setToken(loginRsp.getToken());
 		placebet.setDrawId(drawId);
 		placebet.setMarket("HK");
 		placebet.setGameCode("MARK6");
@@ -40,24 +40,19 @@ public class GetMark6_M6N1_6 extends AbstractGeniLottoGame {
 		item.setDrawType(betType);
 		int betcount = new Random().nextInt(48) + 1;
 		int betamt = 0;
+		createRandomNumber(betcount, 48);
 
-		while (item.getBetItem().size() != betcount) {
-			int Random = new Random().nextInt(48) + 1;
+		for (int i : RndNum) {
 			String contain;
-			if (Random < 10)
-				contain = "0" + Random;
+			if (i < 10)
+				contain = "0" + i;
 			else
-				contain = Random + "";
-			if (!item.getBetItem().contains(contain)) {
-				if (Random < 10) {
-					item.getBetItem().add("0" + Random);
-				} else {
-					item.getBetItem().add(Random + "");
-				}
-				int betamount = new Random().nextInt(50) + 1;
-				item.getBetAmount().add(betamount + "");
-				betamt = betamt + betamount;
-			}
+				contain = i + "";
+			item.getBetItem().add(contain);
+			int betamount = new Random().nextInt(50) + 1;
+			item.getBetAmount().add(betamount + "");
+			betamt = betamt + betamount;
+
 		}
 		placebet.setBetType(betType);
 		placebet.setBetAmount(betamt);

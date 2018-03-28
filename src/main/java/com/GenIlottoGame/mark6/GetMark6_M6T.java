@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.GenIlottoGame.AbstractGeniLottoGame;
 import com.google.common.collect.ImmutableMap;
+import com.model.Request.LoginResponse;
 import com.placebet.item;
 import com.placebet.placeBetEntity;
 
@@ -24,11 +25,11 @@ public class GetMark6_M6T extends AbstractGeniLottoGame {
 			.put("bigodd", 3.92).put("smallodd", 3.92).put("small", 1.96).put("even", 1.96).put("bigeven", 3.92)
 			.put("smalleven", 3.92).build();
 
-	public GetMark6_M6T(String serialNo, String sessionId, String token, int drawId) {
+	public GetMark6_M6T(LoginResponse loginRsp, int drawId) {
 		super();
-		placebet.setSerialNo(serialNo);
-		placebet.setSessionId(sessionId);
-		placebet.setToken(token);
+		placebet.setSerialNo(loginRsp.getSerialNo());
+		placebet.setSessionId(loginRsp.getSessionId());
+		placebet.setToken(loginRsp.getToken());
 		placebet.setDrawId(drawId);
 		placebet.setMarket("HK");
 		placebet.setGameCode("MARK6");
@@ -46,16 +47,14 @@ public class GetMark6_M6T extends AbstractGeniLottoGame {
 		item.setDrawType("M6T");
 		int betcount = new Random().nextInt(7) + 1;
 		int betamt = 0;
-		while (item.getBetItem().size() < betcount) {
-			String betItem = BetTypes.get(new Random().nextInt(7) + 1);
-			if (!item.getBetItem().contains(betItem)) {
-				item.getBetItem().add(betItem);
-				int betAmount = new Random().nextInt(50) + 1;
-				item.getBetAmount().add(betAmount + "");
-				betamt = betamt + betAmount;
-			}
-		}
 
+		createRandomNumber(betcount, 7);
+		for (int i : RndNum) {
+			item.getBetItem().add(BetTypes.get(i));
+			int betAmount = new Random().nextInt(50) + 1;
+			item.getBetAmount().add(betAmount + "");
+			betamt = betamt + betAmount;
+		}
 		placebet.setOdds(Odds.get(item.getBetItem().get(0)) + "");
 		placebet.setBetAmount(betamt);
 		placebet.setBetCount(betcount);

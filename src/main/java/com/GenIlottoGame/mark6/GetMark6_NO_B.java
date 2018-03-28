@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Random;
 import com.GenIlottoGame.AbstractGeniLottoGame;
 import com.google.common.collect.ImmutableMap;
+import com.model.Request.LoginResponse;
 import com.placebet.item;
 import com.placebet.placeBetEntity;
 
@@ -21,11 +22,11 @@ public class GetMark6_NO_B extends AbstractGeniLottoGame {
 			.put("NO6B", 2.612409).put("NO7B", 3.120378).put("NO8B", 3.744453).put("NO9B", 4.51537)
 			.put("NO10B", 5.473176).build();
 
-	public GetMark6_NO_B(String serialNo, String sessionId, String token, int drawId) {
+	public GetMark6_NO_B(LoginResponse loginRsp, int drawId) {
 		super();
-		placebet.setSerialNo(serialNo);
-		placebet.setSessionId(sessionId);
-		placebet.setToken(token);
+		placebet.setSerialNo(loginRsp.getSerialNo());
+		placebet.setSessionId(loginRsp.getSessionId());
+		placebet.setToken(loginRsp.getToken());
 		placebet.setDrawId(drawId);
 		placebet.setMarket("HK");
 		placebet.setGameCode("MARK6");
@@ -42,30 +43,24 @@ public class GetMark6_NO_B extends AbstractGeniLottoGame {
 		String betType = BetTypes.get(size);
 		item = new item();
 		item.setDrawType(betType);
-
-		while (item.getBetItem().size() < size) {
-			int Random = new Random().nextInt(44) + 1;
+		createRandomNumber(size, 44);
+		for (int i : RndNum) {
 			String contain;
-			if (Random < 10)
-				contain = "0" + Random;
+			if (i < 10)
+				contain = "0" + i;
 			else
-				contain = Random + "";
-			if (!item.getBetItem().contains(Random + "")) {
-				if (Random < 10) {
-					item.getBetItem().add("0" + Random);
-				} else {
-					item.getBetItem().add(Random + "");
-				}
-			}
+				contain = i + "";
+			item.getBetItem().add(contain);
 		}
+
 		placebet.setOdds(Odds.get(betType) + "");
 		placebet.setBetType(betType);
 		placebet.getItems().add(item);
 		return placebet;
 	}
+
 	// public static void main(String[] args) {
-	// GetMark6_NO_B test = new GetMark6_NO_B("ddddd", "dddddd", "dddddd",
-	// 45642);
-	// System.out.println(test.get_NO5B());
+	// GetMark6_NO_B test = new GetMark6_NO_B(new LoginResponse(), 45642);
+	// System.out.println(test.get_placeBet());
 	// }
 }

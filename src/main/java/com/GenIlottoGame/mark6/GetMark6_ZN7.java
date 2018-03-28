@@ -3,6 +3,7 @@ package com.GenIlottoGame.mark6;
 import java.util.Random;
 
 import com.GenIlottoGame.AbstractGeniLottoGame;
+import com.model.Request.LoginResponse;
 import com.placebet.item;
 import com.placebet.placeBetEntity;
 
@@ -18,11 +19,11 @@ import com.placebet.placeBetEntity;
  * */
 public class GetMark6_ZN7 extends AbstractGeniLottoGame {
 
-	public GetMark6_ZN7(String serialNo, String sessionId, String token, int drawId) {
+	public GetMark6_ZN7(LoginResponse loginRsp, int drawId) {
 		super();
-		placebet.setSerialNo(serialNo);
-		placebet.setSessionId(sessionId);
-		placebet.setToken(token);
+		placebet.setSerialNo(loginRsp.getSerialNo());
+		placebet.setSessionId(loginRsp.getSessionId());
+		placebet.setToken(loginRsp.getToken());
 		placebet.setDrawId(drawId);
 		placebet.setMarket("HK");
 		placebet.setGameCode("MARK6");
@@ -39,10 +40,8 @@ public class GetMark6_ZN7 extends AbstractGeniLottoGame {
 		item.setDrawType("ZN7");
 		int betCount = new Random().nextInt(11) + 1;
 		int betamt = 0;
-		while (RndNum.size() < betCount) {
-			int Random = new Random().nextInt(11) + 1;
-			RndNum.add(Random);
-		}
+		createRandomNumber(betCount, 11);
+
 		for (int i : RndNum) {
 			item.getBetItem().add(i + "");
 			int betamount = new Random().nextInt(50) + 1;

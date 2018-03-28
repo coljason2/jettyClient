@@ -36,3 +36,5 @@ target/classes/com/GenIlottoGame/mark6/GetMark6_M6T.class
 target/classes/com/GenIlottoGame/mark6/GetMark6_HALF.class
 target/classes/com/api/ChineseCalendar.class
 target/classes/com/GenIlottoGame/mark6/GetMark6_ZALL.class
+target/classes/com/jettyClient/AbstractSimpleEchoSocketClient.class
+target/classes/com/GenIlottoGame/mark6/Mark6AllGames.class
