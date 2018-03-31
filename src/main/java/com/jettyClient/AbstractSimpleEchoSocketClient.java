@@ -107,6 +107,10 @@ abstract public class AbstractSimpleEchoSocketClient {
 		sendMessage(CommandsLotto.QueryDrawInfo, QueryDrawInfo);
 	}
 
+	public placeBetEntity getPlacebet() {
+		return new Mark6AllGames(loginResponse, RspDrawMarket.get(0).getDrawId()).getGame().get_placeBet();
+	}
+
 	abstract public void PlaceBet();
 
 	abstract public void StartPlaceBet();

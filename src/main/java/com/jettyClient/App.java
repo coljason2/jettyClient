@@ -11,7 +11,7 @@ import org.eclipse.jetty.websocket.client.WebSocketClient;
  */
 public class App {
 	public static void main(String[] args) {
-		String destUri = "ws://ws-ilotto-local-dev.sgplay.biz/";
+		String destUri = "ws://ws-ilotto-dev.sgplay.biz/";
 		WebSocketClient client = new WebSocketClient();
 		SimpleEchoSocket socket = new SimpleEchoSocket();
 		try {

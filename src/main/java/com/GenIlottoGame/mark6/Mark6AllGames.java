@@ -1,10 +1,19 @@
 package com.GenIlottoGame.mark6;
 
 import java.util.Map;
+import java.util.Random;
+
 import com.GenIlottoGame.AbstractGeniLottoGame;
 import com.google.common.collect.ImmutableMap;
 import com.model.Request.LoginResponse;
 
+/*
+ * 
+ * 將mark6所有玩法包起來
+ * 並每次隨機產生
+ * 
+ * 
+ * */
 public class Mark6AllGames {
 	private LoginResponse loginRsp;
 	private int drawId;
@@ -25,13 +34,14 @@ public class Mark6AllGames {
 				.put(8, new GetMark6_ZN7(loginRsp, drawId)).build();
 	}
 
-	public AbstractGeniLottoGame getGame(int index) {
-		return PlaceBet.get(index);
+	public AbstractGeniLottoGame getGame() {
+		return PlaceBet.get(new Random().nextInt(8));
 	}
 
-//	public static void main(String[] args) {
-//		Mark6AllGames Mark6AllGames = new Mark6AllGames(new LoginResponse(), 5566);
-//
-//		System.out.println(Mark6AllGames.getGame(4).get_placeBet());
-//	}
+	// public static void main(String[] args) {
+	// Mark6AllGames Mark6AllGames = new Mark6AllGames(new LoginResponse(),
+	// 5566);
+	//
+	// System.out.println(Mark6AllGames.getGame(4).get_placeBet());
+	// }
 }

@@ -2,8 +2,6 @@ package com.jettyClient;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Random;
-
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import com.alibaba.fastjson.JSON;
@@ -12,7 +10,7 @@ import com.api.Commands;
 import com.api.CommandsLotto;
 import lombok.extern.slf4j.Slf4j;
 import com.model.Request.RspDrawMarket;
-import com.GenIlottoGame.mark6.Mark6AllGames;
+
 
 @Slf4j
 @WebSocket(maxTextMessageSize = 128 * 1024)
@@ -20,7 +18,7 @@ public class SimpleEchoSocket extends AbstractSimpleEchoSocketClient {
 
 	@OnWebSocketMessage
 	public void onMessage(String msg) throws IOException, InterruptedException {
-		Thread.sleep(500);
+		Thread.sleep(1000);
 		parseResponseMessage(msg);
 		log.info("Got msg: {} ", msg);
 		// code = response.get("code").toString();
@@ -44,8 +42,7 @@ public class SimpleEchoSocket extends AbstractSimpleEchoSocketClient {
 	}
 
 	public void PlaceBet() {
-		placebet = new Mark6AllGames(loginResponse, RspDrawMarket.get(0).getDrawId()).getGame(new Random().nextInt(8))
-				.get_placeBet();
+		placebet = getPlacebet();
 		sendMessage(CommandsLotto.PlaceBet, placebet);
 	}
 
@@ -53,10 +50,9 @@ public class SimpleEchoSocket extends AbstractSimpleEchoSocketClient {
 		RspDrawMarket = JSON.parseObject(response.getJsonArray("list").toString(),
 				new TypeReference<List<RspDrawMarket>>() {
 				});
-		placebet = new Mark6AllGames(loginResponse, RspDrawMarket.get(0).getDrawId()).getGame(new Random().nextInt(8))
-				.get_placeBet();
+		placebet = getPlacebet();
 		sendMessage(CommandsLotto.PlaceBet, placebet);
-
 	}
+
 
 }
