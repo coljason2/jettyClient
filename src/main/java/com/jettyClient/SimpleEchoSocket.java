@@ -11,7 +11,6 @@ import com.api.CommandsLotto;
 import lombok.extern.slf4j.Slf4j;
 import com.model.Request.RspDrawMarket;
 
-
 @Slf4j
 @WebSocket(maxTextMessageSize = 128 * 1024)
 public class SimpleEchoSocket extends AbstractSimpleEchoSocketClient {
@@ -53,6 +52,5 @@ public class SimpleEchoSocket extends AbstractSimpleEchoSocketClient {
 		placebet = getPlacebet();
 		sendMessage(CommandsLotto.PlaceBet, placebet);
 	}
-
 
 }
