@@ -15,18 +15,18 @@ import javax.json.JsonReader;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.StatusCode;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
-import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 
 import com.GenIlottoGame.mark6.Mark6AllGames;
 import com.alibaba.fastjson.JSON;
+import com.api.Commands;
 import com.api.CommandsLotto;
 import com.model.QueryDrawInfo;
 import com.model.gameMarket;
-import com.model.Request.LoginRequest;
 import com.model.Request.LoginResponse;
 import com.model.Request.RspDrawMarket;
 import com.model.Request.StartGameRequest;
+import com.model.keno.KenoBetType;
 import com.placebet.placeBetEntity;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,9 +42,10 @@ abstract public class AbstractSimpleEchoSocketClient {
 	public List<gameMarket> gameMarketList;
 	public QueryDrawInfo QueryDrawInfo;
 	public List<RspDrawMarket> RspDrawMarket;
+	public List<KenoBetType> kenoBetTypes;
 	public final CountDownLatch closeLatch;
 	public placeBetEntity placebet;
-	private Session session;
+	public Session session;
 
 	public AbstractSimpleEchoSocketClient() {
 		this.closeLatch = new CountDownLatch(1);
@@ -61,22 +62,14 @@ abstract public class AbstractSimpleEchoSocketClient {
 		this.closeLatch.countDown();
 	}
 
-	@OnWebSocketConnect
-	public void onConnect(Session session) {
-		this.session = session;
-		try {
-			sendMessage(101, new LoginRequest());
-		} catch (Throwable t) {
-			t.printStackTrace();
-		}
-	}
+	abstract public void onConnect(Session session);
 
 	public void sendMessage(int commandCode, Object message) {
-		log.info("sendMessage : {}", commandCode + "." + JSON.toJSONString(message));
+		//log.info("sendMessage : {}", commandCode + "." + JSON.toJSONString(message));
 		Future<Void> fut;
 		fut = this.session.getRemote().sendStringByFuture(commandCode + "." + JSON.toJSONString(message));
 		try {
-			fut.get(10, TimeUnit.SECONDS); // wait message send 5 seconds
+			fut.get(5, TimeUnit.SECONDS); // wait message send 5 seconds
 		} catch (InterruptedException e) {
 			session.close(StatusCode.SERVER_ERROR, "InterruptedException");
 			e.printStackTrace();
@@ -96,7 +89,7 @@ abstract public class AbstractSimpleEchoSocketClient {
 		reader.close();
 	}
 
-	public void initStartGameRequest(String msg) {
+	public void init_iLottoStartGameRequest(String msg) {
 		loginResponse = JSON.parseObject(msg.substring(msg.indexOf("{")), LoginResponse.class);
 		QueryDrawInfo = new QueryDrawInfo();
 		QueryDrawInfo.setSerialNo(loginResponse.getSerialNo());
@@ -107,7 +100,17 @@ abstract public class AbstractSimpleEchoSocketClient {
 		sendMessage(CommandsLotto.QueryDrawInfo, QueryDrawInfo);
 	}
 
-	public placeBetEntity getPlacebet() {
+	public void init_KenoStartGameRequest(String msg) {
+		loginResponse = JSON.parseObject(msg.substring(msg.indexOf("{")), LoginResponse.class);
+		QueryDrawInfo = new QueryDrawInfo();
+		QueryDrawInfo.setSerialNo(loginResponse.getSerialNo());
+		QueryDrawInfo.setSessionId(loginResponse.getSessionId());
+		QueryDrawInfo.setToken(loginResponse.getToken());
+		QueryDrawInfo.setGameCode("KN");
+		sendMessage(Commands.QueryOdds, QueryDrawInfo);
+	}
+
+	public placeBetEntity getilottoPlacebet() {
 		return new Mark6AllGames(loginResponse, RspDrawMarket.get(0).getDrawId()).getGame().get_placeBet();
 	}
 

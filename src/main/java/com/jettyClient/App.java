@@ -11,9 +11,10 @@ import org.eclipse.jetty.websocket.client.WebSocketClient;
  */
 public class App {
 	public static void main(String[] args) {
-		String destUri = "ws://ws-ilotto-dev.sgplay.biz/";
+		String destUri = "ws://ws-keno-dev.sgplay.biz/";
 		WebSocketClient client = new WebSocketClient();
-		SimpleEchoSocket socket = new SimpleEchoSocket();
+		// iLottoClient socket = new iLottoClient();
+		KenoClient socket = new KenoClient();
 		try {
 			client.start();
 			URI echoUri = new URI(destUri);

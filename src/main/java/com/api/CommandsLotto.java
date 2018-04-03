@@ -6,7 +6,6 @@ public interface CommandsLotto {
 	public static final String success = "0";
 	//////////////////// html5 api 100 ~ 120 ///////////////////////////////
 	public static final int Login = 101;
-
 	/** query draw info */
 	public static final int QueryDrawInfo = 20;
 
