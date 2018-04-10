@@ -65,7 +65,7 @@ abstract public class AbstractSimpleEchoSocketClient {
 	abstract public void onConnect(Session session);
 
 	public void sendMessage(int commandCode, Object message) {
-		//log.info("sendMessage : {}", commandCode + "." + JSON.toJSONString(message));
+		log.info("sendMessage : {}", commandCode + "." + JSON.toJSONString(message));
 		Future<Void> fut;
 		fut = this.session.getRemote().sendStringByFuture(commandCode + "." + JSON.toJSONString(message));
 		try {

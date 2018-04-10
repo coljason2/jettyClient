@@ -2,6 +2,7 @@ package com.jettyClient;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.eclipse.jetty.websocket.api.Session;
@@ -12,17 +13,26 @@ import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.api.Commands;
+import com.google.common.collect.ImmutableMap;
+import com.model.QueryDrawInfo;
 import com.model.Request.LoginRequest;
 import com.model.keno.KenoBetItem;
 import com.model.keno.KenoBetType;
 import com.placebet.item;
 import com.placebet.placeBetEntity;
+import com.model.keno.DrawResult;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @WebSocket(maxTextMessageSize = 128 * 1024)
 public class KenoClient extends AbstractSimpleEchoSocketClient {
+
+	private List<DrawResult> DrawResult;
+	private int NowDrawNumber;
+	private Map<Integer, String> KenoMarket = new ImmutableMap.Builder<Integer, String>().put(1, "BJ").put(2, "WCA")
+			.put(3, "KN01").put(4, "KN02").put(5, "KN03").put(6, "KN04").build();
+	private String NowMarket;
 
 	@OnWebSocketMessage
 	public void onMessage(String msg) throws IOException, InterruptedException {
@@ -35,26 +45,39 @@ public class KenoClient extends AbstractSimpleEchoSocketClient {
 			init_KenoStartGameRequest(msg);
 			break;
 		case Commands.QueryOdds:
+			GetAllBetType();
+			break;
+		case Commands.ReportResult:
 			StartPlaceBet();
 			break;
+		// case Commands.PlaceBet:
+		// GetMarketDrawNumber();
+		// break;
 		}
+	}
+
+	private void GetAllBetType() {
+		String rsp = response.getJsonArray("list").toString();
+		rsp = rsp.substring(1, rsp.length() - 1);
+		parseResponseMessage(rsp);
+		kenoBetTypes = JSON.parseObject(response.getJsonArray("list").toString(),
+				new TypeReference<List<KenoBetType>>() {
+				});
+		GetMarketDrawNumber();
 	}
 
 	@Override
 	public void PlaceBet() {
+		DrawResult = JSON.parseObject(response.getJsonArray("list").toString(), new TypeReference<List<DrawResult>>() {
+		});
+		NowDrawNumber = DrawResult.get(DrawResult.size() - 1).getId() + 1;
+
+		log.info("NowMarket = {} , NowDrawNumber = {}", new Object[] { NowMarket, NowDrawNumber });
+		sendPlaceBet(NowDrawNumber, NowMarket);
 
 	}
 
-	@Override
-	public void StartPlaceBet() {
-		String rsp = response.getJsonArray("list").toString();
-		rsp = rsp.substring(1, rsp.length() - 1);
-		parseResponseMessage(rsp);
-		System.out.println(response.getJsonArray("list").toString());
-		kenoBetTypes = JSON.parseObject(response.getJsonArray("list").toString(),
-				new TypeReference<List<KenoBetType>>() {
-				});
-
+	private void sendPlaceBet(int DrawNumber, String market) {
 		for (KenoBetType b : kenoBetTypes) {
 			placebet = new placeBetEntity();
 			placebet.setGameCode("KN");
@@ -62,27 +85,42 @@ public class KenoClient extends AbstractSimpleEchoSocketClient {
 			placebet.setSessionId(loginResponse.getSessionId());
 			placebet.setToken(loginResponse.getToken());
 			placebet.setBetType(b.getBetType());
-			placebet.setMarket("KN01");
-			// placebet.setDrawId();
+			placebet.setMarket(market);
+			placebet.setDrawId(DrawNumber);
 			item item;
 			int betAmount;
 			for (KenoBetItem i : b.getItems()) {
 				item = new item();
-				item.getBetItem().add(i.getBetItem());
 				item.setDrawType(b.getBetType());
 				betAmount = (int) ((new Random().nextInt(10) + 10) * i.getOdds());
+				if ("Ball".equals(b.getBetType())) {
+					item.getBetItem().add((String.valueOf(new Random().nextInt(79) + 1)));
+				} else {
+					item.getBetItem().add(i.getBetItem());
+				}
+
 				placebet.getItems().add(item);
 				placebet.setBetAmount(betAmount);
 				placebet.setOdds(String.valueOf(i.getOdds()));
 				sendMessage(Commands.PlaceBet, placebet);
 				placebet.getItems().clear();
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+
+				if ("Ball".equals(b.getBetType()))
+					break;
 			}
 		}
+	}
+
+	public void GetMarketDrawNumber() {
+		NowMarket = KenoMarket.get(new Random().nextInt(5) + 1);
+		QueryDrawInfo = new QueryDrawInfo();
+		QueryDrawInfo.setSerialNo(loginResponse.getSerialNo());
+		QueryDrawInfo.setSessionId(loginResponse.getSessionId());
+		QueryDrawInfo.setToken(loginResponse.getToken());
+		QueryDrawInfo.setGameCode("KN");
+		QueryDrawInfo.setMarket(NowMarket);
+
+		sendMessage(Commands.ReportResult, QueryDrawInfo);
 
 	}
 
@@ -95,4 +133,10 @@ public class KenoClient extends AbstractSimpleEchoSocketClient {
 			t.printStackTrace();
 		}
 	}
+
+	@Override
+	public void StartPlaceBet() {
+		PlaceBet();
+	}
+
 }
