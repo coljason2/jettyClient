@@ -34,7 +34,7 @@ public class GetMark6_ZG6 extends AbstractGeniLottoGame {
 		placebet.setGameCode("MARK6");
 		placebet.setMultiple(1);
 		placebet.setComm(0.02);
-		placebet.setPrizeGroup("1950");
+		placebet.setPrizeGroup("1960");
 		placebet.setBetType("ZG6");
 	}
 

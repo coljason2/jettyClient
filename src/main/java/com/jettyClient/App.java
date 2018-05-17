@@ -13,8 +13,9 @@ public class App {
 	public static void main(String[] args) {
 		String destUri = "ws://ws-keno-dev.sgplay.biz/";
 		WebSocketClient client = new WebSocketClient();
-		// iLottoClient socket = new iLottoClient();
+		 //iLottoClient socket = new iLottoClient();
 		KenoClient socket = new KenoClient();
+		//iLottoClient socket = new iLottoClient();
 		try {
 			client.start();
 			URI echoUri = new URI(destUri);

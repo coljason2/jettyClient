@@ -22,7 +22,7 @@ public class iLottoClient extends AbstractSimpleEchoSocketClient {
 
 	@OnWebSocketMessage
 	public void onMessage(String msg) throws IOException, InterruptedException {
-		Thread.sleep(1000);
+		//Thread.sleep(1000);
 		parseResponseMessage(msg);
 		log.info("Got msg: {} ", msg);
 		// code = response.get("code").toString();

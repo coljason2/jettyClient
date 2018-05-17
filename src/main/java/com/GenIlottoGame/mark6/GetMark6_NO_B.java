@@ -34,7 +34,7 @@ public class GetMark6_NO_B extends AbstractGeniLottoGame {
 		placebet.setBetUnit(1);
 		placebet.setBetCount(1);
 		placebet.setComm(0.02);
-		placebet.setPrizeGroup("1950");
+		placebet.setPrizeGroup("1960");
 		placebet.setBetAmount(new Random().nextInt(50) + 1);
 	}
 

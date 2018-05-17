@@ -24,7 +24,7 @@ public class GetMark6_M6N7 extends AbstractGeniLottoGame {
 		placebet.setMultiple(1);
 		placebet.setBetUnit(1);
 		placebet.setComm(0.02);
-		placebet.setPrizeGroup("1950");
+		placebet.setPrizeGroup("1960");
 		placebet.setBetType("M6N7");
 		placebet.setOdds("48.02");
 	}

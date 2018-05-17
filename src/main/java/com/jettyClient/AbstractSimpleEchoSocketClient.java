@@ -17,6 +17,7 @@ import org.eclipse.jetty.websocket.api.StatusCode;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 
+import com.GenIlottoGame.HL11x5.HL11x5AllGames;
 import com.GenIlottoGame.mark6.Mark6AllGames;
 import com.alibaba.fastjson.JSON;
 import com.api.Commands;
@@ -95,8 +96,8 @@ abstract public class AbstractSimpleEchoSocketClient {
 		QueryDrawInfo.setSerialNo(loginResponse.getSerialNo());
 		QueryDrawInfo.setSessionId(loginResponse.getSessionId());
 		QueryDrawInfo.setToken(loginResponse.getToken());
-		QueryDrawInfo.setMarket("HK");
-		QueryDrawInfo.setGameCode("MARK6");
+		QueryDrawInfo.setMarket("GD");
+		QueryDrawInfo.setGameCode("HL11x5");
 		sendMessage(CommandsLotto.QueryDrawInfo, QueryDrawInfo);
 	}
 
@@ -111,7 +112,9 @@ abstract public class AbstractSimpleEchoSocketClient {
 	}
 
 	public placeBetEntity getilottoPlacebet() {
-		return new Mark6AllGames(loginResponse, RspDrawMarket.get(0).getDrawId()).getGame().get_placeBet();
+		// return new Mark6AllGames(loginResponse,
+		// RspDrawMarket.get(0).getDrawId()).getGame().get_placeBet();
+		return new HL11x5AllGames(loginResponse, RspDrawMarket.get(0).getDrawId()).getGame().get_placeBet();
 	}
 
 	abstract public void PlaceBet();

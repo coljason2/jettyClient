@@ -1,9 +1,14 @@
 package com.jettyClient;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
@@ -28,7 +33,6 @@ import lombok.extern.slf4j.Slf4j;
 @WebSocket(maxTextMessageSize = 128 * 1024)
 public class KenoClient extends AbstractSimpleEchoSocketClient {
 
-	private List<DrawResult> DrawResult;
 	private int NowDrawNumber;
 	private Map<Integer, String> KenoMarket = new ImmutableMap.Builder<Integer, String>().put(1, "BJ").put(2, "WCA")
 			.put(3, "KN01").put(4, "KN02").put(5, "KN03").put(6, "KN04").build();
@@ -36,7 +40,7 @@ public class KenoClient extends AbstractSimpleEchoSocketClient {
 
 	@OnWebSocketMessage
 	public void onMessage(String msg) throws IOException, InterruptedException {
-		Thread.sleep(1000);
+		Thread.sleep(500);
 		parseResponseMessage(msg);
 		log.info("Got msg: {} ", msg);
 		getCommandCode = Integer.parseInt(msg.substring(0, msg.indexOf(".")));
@@ -47,7 +51,7 @@ public class KenoClient extends AbstractSimpleEchoSocketClient {
 		case Commands.QueryOdds:
 			GetAllBetType();
 			break;
-		case Commands.ReportResult:
+		case Commands.QueryDrawInfo:
 			StartPlaceBet();
 			break;
 		// case Commands.PlaceBet:
@@ -68,16 +72,19 @@ public class KenoClient extends AbstractSimpleEchoSocketClient {
 
 	@Override
 	public void PlaceBet() {
-		DrawResult = JSON.parseObject(response.getJsonArray("list").toString(), new TypeReference<List<DrawResult>>() {
-		});
-		NowDrawNumber = DrawResult.get(DrawResult.size() - 1).getId() + 1;
-
+		String parsString = response.getJsonArray("list").toString().substring(1,
+				response.getJsonArray("list").toString().length() - 1);
+		JsonReader reader = Json.createReader(new StringReader(parsString));
+		JsonObject rsp = reader.readObject();
+		reader.close();
+		NowDrawNumber = Integer.parseInt(rsp.get("drawId").toString());
 		log.info("NowMarket = {} , NowDrawNumber = {}", new Object[] { NowMarket, NowDrawNumber });
 		sendPlaceBet(NowDrawNumber, NowMarket);
 
 	}
 
 	private void sendPlaceBet(int DrawNumber, String market) {
+
 		for (KenoBetType b : kenoBetTypes) {
 			placebet = new placeBetEntity();
 			placebet.setGameCode("KN");
@@ -109,6 +116,7 @@ public class KenoClient extends AbstractSimpleEchoSocketClient {
 					break;
 			}
 		}
+		GetMarketDrawNumber();
 	}
 
 	public void GetMarketDrawNumber() {
@@ -119,8 +127,7 @@ public class KenoClient extends AbstractSimpleEchoSocketClient {
 		QueryDrawInfo.setToken(loginResponse.getToken());
 		QueryDrawInfo.setGameCode("KN");
 		QueryDrawInfo.setMarket(NowMarket);
-
-		sendMessage(Commands.ReportResult, QueryDrawInfo);
+		sendMessage(Commands.QueryDrawInfo, QueryDrawInfo);
 
 	}
 

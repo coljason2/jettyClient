@@ -30,7 +30,7 @@ public class GetMark6_ZN7 extends AbstractGeniLottoGame {
 		placebet.setMultiple(1);
 		placebet.setBetUnit(1);
 		placebet.setComm(0.02);
-		placebet.setPrizeGroup("1950");
+		placebet.setPrizeGroup("1960");
 		placebet.setBetType("ZN7");
 	}
 
